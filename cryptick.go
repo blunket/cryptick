@@ -25,13 +25,15 @@ func main() {
 	flag.Float64Var(&btc, "btc", 0, "Current bitcoin balance")
 	flag.Parse()
 
+	d := time.Duration(freq) * time.Second
+
 	for {
-		tick(freq, btc)
-		time.Sleep(time.Duration(freq) * time.Second)
+		tick(btc)
+		time.Sleep(d)
 	}
 }
 
-func tick(freq int, btc float64) {
+func tick(btc float64) {
 	ask, bid := getTicker("btc")
 	a, _ := strconv.ParseFloat(ask, 32)
 	b, _ := strconv.ParseFloat(bid, 32)
@@ -42,7 +44,6 @@ func tick(freq int, btc float64) {
 	} else {
 		fmt.Printf("Ask: %.2f\tBid: %.2f\n", a, b)
 	}
-
 }
 
 func getTicker(t string) (string, string) {
