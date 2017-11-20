@@ -19,31 +19,42 @@ type coin struct {
 }
 
 func main() {
-	var freq int = 10
-	var btc float64 = 0
+	var (
+		freq    int     = 10
+		btc     float64 = 0
+		inPlace bool
+	)
 	flag.IntVar(&freq, "freq", 10, "Polling frequency in seconds")
 	flag.Float64Var(&btc, "btc", 0, "Current bitcoin balance")
+	flag.BoolVar(&inPlace, "in-place", false, "Keep ticker in place by attempting to overwrite the line rather than printing on many lines (may not always work)")
 	flag.Parse()
 
 	d := time.Duration(freq) * time.Second
 
+	if inPlace {
+		fmt.Println()
+	}
 	for {
-		tick(btc)
+		t := tick(btc)
+		if inPlace {
+			fmt.Printf("\033[1A\033[K") // move cursor up a line, then delete that line
+		}
+		fmt.Print(t)
 		time.Sleep(d)
 	}
 }
 
-func tick(btc float64) {
+func tick(btc float64) string {
 	ask, bid := getTicker("btc")
 	a, _ := strconv.ParseFloat(ask, 32)
 	b, _ := strconv.ParseFloat(bid, 32)
 
 	if btc != 0 {
 		val := a * btc
-		fmt.Printf("Ask: %.2f\tBid: %.2f\tValue: %.2f\n", a, b, val)
-	} else {
-		fmt.Printf("Ask: %.2f\tBid: %.2f\n", a, b)
+		return fmt.Sprintf("Ask: %.2f\tBid: %.2f\tValue: %.2f\n", a, b, val)
 	}
+
+	return fmt.Sprintf("Ask: %.2f\tBid: %.2f\n", a, b)
 }
 
 func getTicker(t string) (string, string) {
