@@ -4,15 +4,13 @@ import flag "github.com/spf13/pflag"
 
 var (
 	freq    int
-	btc     float64
+	balance float64
 	inPlace bool
 )
 
 func init() {
-
-	flag.IntVar(&freq, "freq", 10, "Polling frequency in seconds")
-	flag.Float64Var(&btc, "btc", 0, "Current bitcoin balance")
-	flag.BoolVar(&inPlace, "in-place", false, "Keep ticker in place by attempting to overwrite the line rather than printing on many lines (may not always work)")
+	flag.IntVarP(&freq, "freq", "f", 10, "Polling frequency in seconds")
+	flag.Float64VarP(&balance, "balance", "p", 0, "If specified, calculate price of balance")
+	flag.BoolVarP(&inPlace, "in-place", "o", false, "Keep ticker in place (overwrite same line)")
 	flag.Parse()
-
 }

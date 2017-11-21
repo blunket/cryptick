@@ -35,7 +35,6 @@ type coin struct {
 }
 
 func main() {
-
 	d := time.Duration(freq) * time.Second
 
 	if inPlace {
@@ -45,18 +44,18 @@ func main() {
 		if inPlace {
 			fmt.Printf("\033[1A\033[K") // move cursor up a line, then delete that line
 		}
-		tick(btc)
+		tick()
 		time.Sleep(d)
 	}
 }
 
-func tick(btc float64) {
+func tick() {
 	ask, bid := getTicker("btc")
 	a, _ := strconv.ParseFloat(ask, 32)
 	b, _ := strconv.ParseFloat(bid, 32)
 
-	if btc != 0 {
-		val := a * btc
+	if balance != 0 {
+		val := a * balance
 		fmt.Printf("Ask: %.2f\tBid: %.2f\tValue: %.2f\n", a, b, val)
 	} else {
 		fmt.Printf("Ask: %.2f\tBid: %.2f\n", a, b)
