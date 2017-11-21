@@ -16,7 +16,7 @@ $ ./cryptick [--btc=0.12345678]
 `$ ./cryptick [options]`
 
 ```
---freq <seconds>  Polling frequency in seconds (default 10 seconds)
---btc=<value>     If specified, calculate price of <value> btc
---in-place        Keep ticker in place (overwrite the same line)
+-p, --balance float   If specified, calculate price of balance
+-f, --freq int        Polling frequency in seconds (default 10)
+-o, --in-place        Keep ticker in place (overwrite same line)
 ```
