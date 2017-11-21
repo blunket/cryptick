@@ -7,8 +7,10 @@ This project is heavily inspired by Justyn Temme's [cointick](https://github.com
 `$ go get github.com/blunket/cryptick`
 
 ## Synopsis
-`$ ./cryptick [--freq=<seconds>] [--in-place]`
-`$ ./cryptick [--btc=0.12345678]`
+```
+$ ./cryptick [--freq=<seconds>] [--in-place]
+$ ./cryptick [--btc=0.12345678]
+```
 
 ## Usage
 `$ ./cryptick [options]`
