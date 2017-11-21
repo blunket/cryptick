@@ -19,7 +19,6 @@ package main
 
 import (
 	"encoding/json"
-	"flag"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -36,16 +35,6 @@ type coin struct {
 }
 
 func main() {
-	var (
-		freq    int
-		btc     float64
-		inPlace bool
-	)
-
-	flag.IntVar(&freq, "freq", 10, "Polling frequency in seconds")
-	flag.Float64Var(&btc, "btc", 0, "Current bitcoin balance")
-	flag.BoolVar(&inPlace, "in-place", false, "Keep ticker in place by attempting to overwrite the line rather than printing on many lines (may not always work)")
-	flag.Parse()
 
 	d := time.Duration(freq) * time.Second
 
