@@ -20,6 +20,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -51,8 +52,14 @@ func main() {
 
 func tick() {
 	ask, bid := getTicker("btc")
-	a, _ := strconv.ParseFloat(ask, 32)
-	b, _ := strconv.ParseFloat(bid, 32)
+	a, err := strconv.ParseFloat(ask, 32)
+	if err != nil {
+		log.Fatal(err)
+	}
+	b, err := strconv.ParseFloat(bid, 32)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	if balance != 0 {
 		val := a * balance
@@ -63,10 +70,15 @@ func tick() {
 }
 
 func getTicker(t string) (string, string) {
-	d, _ := http.Get("https://api.nexchange.io/en/api/v1/price/" + t + "USD/latest?format=json")
+	d, err := http.Get("https://api.nexchange.io/en/api/v1/price/" + t + "USD/latest?format=json")
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	c := []coin{}
-	json.NewDecoder(d.Body).Decode(&c)
+	if err = json.NewDecoder(d.Body).Decode(&c); err != nil {
+		log.Fatal(err)
+	}
 
 	ask, bid := c[0].Ticker.Ask, c[0].Ticker.Bid
 
