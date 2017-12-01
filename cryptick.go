@@ -71,6 +71,9 @@ func tick() {
 
 func getTicker(t string) (string, string) {
 	d, err := http.Get("https://api.nexchange.io/en/api/v1/price/" + t + "USD/latest?format=json")
+	if d.StatusCode != 200 {
+		log.Fatal("Did not receive status code 200 from Nexchange API")
+	}
 	if err != nil {
 		log.Fatal(err)
 	}
